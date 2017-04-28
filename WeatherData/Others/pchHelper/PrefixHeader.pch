@@ -1,0 +1,62 @@
+//
+//  PrefixHeader.pch
+//  WeatherData
+//
+//  Created by Jason_Xu on 16/8/27.
+//  Copyright © 2016年 Jason_Xu. All rights reserved.
+//
+
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#define XXYNoteCenter [NSNotificationCenter defaultCenter]
+
+#ifdef DEBUG
+#define XXYLog(...) NSLog(__VA_ARGS__)
+#else
+#define XXYLog(...)
+#endif
+
+#define XXYLogFunc XXYLog(@"%s", __func__)
+
+#define XXYColor(r, g, b) [UIColor colorWithRed:(r/255.0) green:(g/255.0) blue:(b/ 255.0) alpha:1.0]
+
+#define XXYGlobalBg XXYColor(223, 223, 223)
+#define XXYGlobalSpaceColor [UIColor colorWithHexString:@"#efefef"]
+
+#define XXYScreenW [UIScreen mainScreen].bounds.size.width
+#define XXYScreenH [UIScreen mainScreen].bounds.size.height
+#define XXYScreenBounds [UIScreen mainScreen].bounds
+#define XXYNavgationBarHeight 64.0f
+
+#define kIphone6ScreenHeight 667.0f
+#define kIphone6ScreenWidth 375.0f
+#define kViewWidthScale (XXYScreenW / kIphone6ScreenWidth)
+#define kViewHeightScale (XXYScreenH / kIphone6ScreenHeight)
+
+
+#define kTimeoutInterval 30.0f
+
+//判断当前设备机型是否为6
+#define kIPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define ISNSStringValid(x) (x != NULL && [x length] > 0)
+
+#pragma mark - weakify & strongify
+#ifndef    weakify
+#if __has_feature(objc_arc)
+#define weakify(object) __weak __typeof__(object) weak##_##object = object;
+#else
+#define weakify(object) __block __typeof__(object) block##_##object = object;
+#endif
+#endif
+#ifndef    strongify
+#if __has_feature(objc_arc)
+#define strongify(object) __typeof__(object) strong##_##object = weak##_##object;
+#else
+#define strongify(object) __typeof__(object) strong##_##object = block##_##object;
+#endif
+#endif
+
+#endif
